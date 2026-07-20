@@ -68,6 +68,7 @@ See [examples/](examples/) for usage samples.
 - [Development](docs/development.md)
 - [Testing](docs/testing.md)
 - [CI/CD](docs/ci.md)
+- [Gateway deployment on Jetson AGX Orin](opensovd-cli/gateway/README.md#deploying-on-the-jetson-agx-orin)
 
 ## Contributing
 

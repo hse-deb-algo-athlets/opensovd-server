@@ -33,15 +33,12 @@ def pytest_configure(config):
 
 
 @pytest.hookimpl(optionalhook=True)
-def pytest_metadata(metadata):
-    """Add project metadata to the test report (pytest-metadata hook)."""
     metadata["SOVD Version"] = "1.1.0"
 
 
 @pytest.hookimpl(optionalhook=True)
 def pytest_html_results_summary(prefix, summary, postfix):
     """Render metadata keys ending in _URL as clickable links at the top."""
-    if _config is None:
         return
     try:
         from pytest_metadata.plugin import metadata_key

@@ -1,0 +1,28 @@
+# SPDX-FileCopyrightText: Copyright (c) 2026 Contributors to the Eclipse Foundation
+# SPDX-License-Identifier: Apache-2.0
+#
+# Autostart unit for opensovd-gateway on a bare-metal host (e.g. Jetson AGX Orin).
+# See opensovd-cli/gateway/README.md ("Deploying on the Jetson AGX Orin") for install steps.
+
+[Unit]
+Description=OpenSOVD Gateway
+After=network-online.target robodog.service
+Wants=network-online.target
+
+[Service]
+Type=notify
+# --url binds all interfaces so other devices on the network can reach the gateway.
+# --zenoh-endpoint points at the Robodog Zenoh router; its docker-compose stack
+# publishes 7447/tcp to the host, so a native (non-container) process reaches it
+# via localhost.
+ExecStart=/usr/local/bin/opensovd-gateway \
+  --url http://0.0.0.0:7690/sovd \
+  --zenoh-endpoint tcp/127.0.0.1:7447
+Restart=on-failure
+RestartSec=5
+# TODO: set to the non-root account this should run as.
+User=CHANGE_ME
+NoNewPrivileges=true
+
+[Install]
+WantedBy=multi-user.target
